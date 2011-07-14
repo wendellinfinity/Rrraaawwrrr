@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /App_Data/
+Disallow: /bin/
+Disallow: /Content/
+Disallow: /Controllers/
+Disallow: /Models/
+Disallow: /obj/
+Disallow: /Properties/
+Disallow: /Scripts/
+Disallow: /Services/
+Disallow: /Views/
+Allow: /

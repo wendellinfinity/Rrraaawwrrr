@@ -1,0 +1,564 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DungeonData.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="DungeonDataStoreContainer">
+    <EntitySet Name="Heroes" EntityType="DungeonData.Store.Heroes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HeroAttributes" EntityType="DungeonData.Store.HeroAttributes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DungeonMaps" EntityType="DungeonData.Store.DungeonMaps" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Events" EntityType="DungeonData.Store.Events" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DungeonGridEvents" EntityType="DungeonData.Store.DungeonGridEvents" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Monsters" EntityType="DungeonData.Store.Monsters" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Treasures" EntityType="DungeonData.Store.Treasures" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Events_MonsterEvent" EntityType="DungeonData.Store.Events_MonsterEvent" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Events_TreasureEvent" EntityType="DungeonData.Store.Events_TreasureEvent" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="HeroHeroAttributes" Association="DungeonData.Store.HeroHeroAttributes">
+      <End Role="Hero" EntitySet="Heroes" />
+      <End Role="HeroAttributes" EntitySet="HeroAttributes" />
+    </AssociationSet>
+    <AssociationSet Name="DungeonMapDungeonGridEvent" Association="DungeonData.Store.DungeonMapDungeonGridEvent">
+      <End Role="DungeonMap" EntitySet="DungeonMaps" />
+      <End Role="DungeonGridEvent" EntitySet="DungeonGridEvents" />
+    </AssociationSet>
+    <AssociationSet Name="DungeonGridEventEvent" Association="DungeonData.Store.DungeonGridEventEvent">
+      <End Role="DungeonGridEvent" EntitySet="DungeonGridEvents" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="MonsterEventMonster" Association="DungeonData.Store.MonsterEventMonster">
+      <End Role="MonsterEvent" EntitySet="Events_MonsterEvent" />
+      <End Role="Monster" EntitySet="Monsters" />
+    </AssociationSet>
+    <AssociationSet Name="TreasureEventTreasure" Association="DungeonData.Store.TreasureEventTreasure">
+      <End Role="TreasureEvent" EntitySet="Events_TreasureEvent" />
+      <End Role="Treasure" EntitySet="Treasures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MonsterEvent_inherits_Event" Association="DungeonData.Store.FK_MonsterEvent_inherits_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="MonsterEvent" EntitySet="Events_MonsterEvent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TreasureEvent_inherits_Event" Association="DungeonData.Store.FK_TreasureEvent_inherits_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="TreasureEvent" EntitySet="Events_TreasureEvent" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Heroes">
+    <Key>
+      <PropertyRef Name="HeroId" />
+    </Key>
+    <Property Name="HeroId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HeroName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Class" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="HeroAttribute_HeroId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HeroAttributes">
+    <Key>
+      <PropertyRef Name="HeroId" />
+    </Key>
+    <Property Name="HeroId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Life" Type="int" Nullable="false" />
+    <Property Name="Strength" Type="int" Nullable="false" />
+    <Property Name="Agility" Type="int" Nullable="false" />
+    <Property Name="Intelligence" Type="int" Nullable="false" />
+    <Property Name="Wisdom" Type="int" Nullable="false" />
+    <Property Name="Charm" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DungeonMaps">
+    <Key>
+      <PropertyRef Name="GridId" />
+    </Key>
+    <Property Name="GridId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IsDark" Type="bit" Nullable="false" />
+    <Property Name="IsTrapped" Type="bit" Nullable="false" />
+    <Property Name="NorthGridId" Type="bigint" Nullable="false" />
+    <Property Name="SouthGridId" Type="bigint" Nullable="false" />
+    <Property Name="EastGridId" Type="bigint" Nullable="false" />
+    <Property Name="WestGridId" Type="bigint" Nullable="false" />
+    <Property Name="NorthFeature" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SouthFeature" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="EastFeature" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="WestFeature" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="X" Type="int" Nullable="false" />
+    <Property Name="Y" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Events">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DungeonGridEventDungeonGridEventId" Type="int" Nullable="false" />
+    <Property Name="DungeonGridEventDungeonGridEventId1" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DungeonGridEvents">
+    <Key>
+      <PropertyRef Name="DungeonGridEventId" />
+    </Key>
+    <Property Name="DungeonGridEventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DungeonMapGridId" Type="bigint" Nullable="false" />
+    <Property Name="DungeonMap_GridId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Monsters">
+    <Key>
+      <PropertyRef Name="MonsterId" />
+    </Key>
+    <Property Name="MonsterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MonsterName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Attack" Type="int" Nullable="false" />
+    <Property Name="Defense" Type="int" Nullable="false" />
+    <Property Name="Alignment" Type="int" Nullable="false" />
+    <Property Name="MonsterEventEventId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Treasures">
+    <Key>
+      <PropertyRef Name="TreasureId" />
+    </Key>
+    <Property Name="TreasureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TreasureName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TreasureEventEventId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Events_MonsterEvent">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Events_TreasureEvent">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="HeroHeroAttributes">
+    <End Role="Hero" Type="DungeonData.Store.Heroes" Multiplicity="*" />
+    <End Role="HeroAttributes" Type="DungeonData.Store.HeroAttributes" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="HeroAttributes">
+        <PropertyRef Name="HeroId" />
+      </Principal>
+      <Dependent Role="Hero">
+        <PropertyRef Name="HeroAttribute_HeroId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DungeonMapDungeonGridEvent">
+    <End Role="DungeonMap" Type="DungeonData.Store.DungeonMaps" Multiplicity="1" />
+    <End Role="DungeonGridEvent" Type="DungeonData.Store.DungeonGridEvents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DungeonMap">
+        <PropertyRef Name="GridId" />
+      </Principal>
+      <Dependent Role="DungeonGridEvent">
+        <PropertyRef Name="DungeonMap_GridId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DungeonGridEventEvent">
+    <End Role="DungeonGridEvent" Type="DungeonData.Store.DungeonGridEvents" Multiplicity="1" />
+    <End Role="Event" Type="DungeonData.Store.Events" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DungeonGridEvent">
+        <PropertyRef Name="DungeonGridEventId" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="DungeonGridEventDungeonGridEventId1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MonsterEventMonster">
+    <End Role="MonsterEvent" Type="DungeonData.Store.Events_MonsterEvent" Multiplicity="1" />
+    <End Role="Monster" Type="DungeonData.Store.Monsters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MonsterEvent">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="Monster">
+        <PropertyRef Name="MonsterEventEventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TreasureEventTreasure">
+    <End Role="TreasureEvent" Type="DungeonData.Store.Events_TreasureEvent" Multiplicity="1" />
+    <End Role="Treasure" Type="DungeonData.Store.Treasures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TreasureEvent">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="Treasure">
+        <PropertyRef Name="TreasureEventEventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MonsterEvent_inherits_Event">
+    <End Role="Event" Type="DungeonData.Store.Events" Multiplicity="1" />
+    <End Role="MonsterEvent" Type="DungeonData.Store.Events_MonsterEvent" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="MonsterEvent">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreasureEvent_inherits_Event">
+    <End Role="Event" Type="DungeonData.Store.Events" Multiplicity="1" />
+    <End Role="TreasureEvent" Type="DungeonData.Store.Events_TreasureEvent" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="TreasureEvent">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DungeonData" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="DungeonDataContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Heroes" EntityType="DungeonData.Hero" />
+          <EntitySet Name="HeroAttributes" EntityType="DungeonData.HeroAttributes" />
+          <AssociationSet Name="HeroHeroAttributes" Association="DungeonData.HeroHeroAttributes">
+            <End Role="Hero" EntitySet="Heroes" />
+            <End Role="HeroAttributes" EntitySet="HeroAttributes" />
+          </AssociationSet>
+          <EntitySet Name="DungeonMaps" EntityType="DungeonData.DungeonMap" />
+          <EntitySet Name="Events" EntityType="DungeonData.Event" />
+          <EntitySet Name="DungeonGridEvents" EntityType="DungeonData.DungeonGridEvent" />
+          <AssociationSet Name="DungeonMapDungeonGridEvent" Association="DungeonData.DungeonMapDungeonGridEvent">
+            <End Role="DungeonMap" EntitySet="DungeonMaps" />
+            <End Role="DungeonGridEvent" EntitySet="DungeonGridEvents" />
+          </AssociationSet>
+          <AssociationSet Name="DungeonGridEventEvent" Association="DungeonData.DungeonGridEventEvent">
+            <End Role="DungeonGridEvent" EntitySet="DungeonGridEvents" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <EntitySet Name="Monsters" EntityType="DungeonData.Monster" />
+          <AssociationSet Name="MonsterEventMonster" Association="DungeonData.MonsterEventMonster">
+            <End Role="MonsterEvent" EntitySet="Events" />
+            <End Role="Monster" EntitySet="Monsters" />
+          </AssociationSet>
+          <EntitySet Name="Treasures" EntityType="DungeonData.Treasure" />
+          <AssociationSet Name="TreasureEventTreasure" Association="DungeonData.TreasureEventTreasure">
+            <End Role="TreasureEvent" EntitySet="Events" />
+            <End Role="Treasure" EntitySet="Treasures" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Hero">
+          <Key>
+            <PropertyRef Name="HeroId" />
+          </Key>
+          <Property Type="Int32" Name="HeroId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="HeroName" Nullable="false" />
+          <Property Type="String" Name="Class" Nullable="false" />
+          <NavigationProperty Name="HeroAttribute" Relationship="DungeonData.HeroHeroAttributes" FromRole="Hero" ToRole="HeroAttributes" />
+          <Property Type="String" Name="Description" Nullable="true" />
+        </EntityType>
+        <EntityType Name="HeroAttributes">
+          <Key>
+            <PropertyRef Name="HeroId" />
+          </Key>
+          <Property Type="Int32" Name="HeroId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="Life" Nullable="false" />
+          <Property Type="Int32" Name="Strength" Nullable="false" />
+          <Property Type="Int32" Name="Agility" Nullable="false" />
+          <Property Type="Int32" Name="Intelligence" Nullable="false" />
+          <Property Type="Int32" Name="Wisdom" Nullable="false" />
+          <NavigationProperty Name="Hero" Relationship="DungeonData.HeroHeroAttributes" FromRole="HeroAttributes" ToRole="Hero" />
+          <Property Type="Int32" Name="Charm" Nullable="false" />
+        </EntityType>
+        <Association Name="HeroHeroAttributes">
+          <End Type="DungeonData.Hero" Role="Hero" Multiplicity="1" />
+          <End Type="DungeonData.HeroAttributes" Role="HeroAttributes" Multiplicity="1" />
+        </Association>
+        <EntityType Name="DungeonMap">
+          <Key>
+            <PropertyRef Name="GridId" />
+          </Key>
+          <Property Type="Int64" Name="GridId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Boolean" Name="IsDark" Nullable="false" />
+          <Property Type="Boolean" Name="IsTrapped" Nullable="false" />
+          <Property Type="Int64" Name="NorthGridId" Nullable="false" />
+          <Property Type="Int64" Name="SouthGridId" Nullable="false" />
+          <Property Type="Int64" Name="EastGridId" Nullable="false" />
+          <Property Type="Int64" Name="WestGridId" Nullable="false" />
+          <NavigationProperty Name="DungeonGridEvents" Relationship="DungeonData.DungeonMapDungeonGridEvent" FromRole="DungeonMap" ToRole="DungeonGridEvent" />
+          <Property Type="String" Name="NorthFeature" Nullable="true" />
+          <Property Type="String" Name="SouthFeature" Nullable="true" />
+          <Property Type="String" Name="EastFeature" Nullable="true" />
+          <Property Type="String" Name="WestFeature" Nullable="true" />
+          <Property Type="Int32" Name="X" Nullable="false" />
+          <Property Type="Int32" Name="Y" Nullable="false" />
+          </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Type="Int32" Name="EventId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="EventName" Nullable="false" />
+          <Property Type="Int32" Name="DungeonGridEventDungeonGridEventId" Nullable="false" />
+          <NavigationProperty Name="DungeonGridEvent" Relationship="DungeonData.DungeonGridEventEvent" FromRole="Event" ToRole="DungeonGridEvent" />
+          <Property Type="Int32" Name="DungeonGridEventDungeonGridEventId1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MonsterEvent" BaseType="DungeonData.Event" >
+          <NavigationProperty Name="Monsters" Relationship="DungeonData.MonsterEventMonster" FromRole="MonsterEvent" ToRole="Monster" />
+        </EntityType>
+        <EntityType Name="TreasureEvent" BaseType="DungeonData.Event" >
+          <NavigationProperty Name="Treasures" Relationship="DungeonData.TreasureEventTreasure" FromRole="TreasureEvent" ToRole="Treasure" />
+        </EntityType>
+        <EntityType Name="DungeonGridEvent">
+          <Key>
+            <PropertyRef Name="DungeonGridEventId" />
+          </Key>
+          <Property Type="Int32" Name="DungeonGridEventId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Notes" Nullable="false" />
+          <NavigationProperty Name="DungeonMap" Relationship="DungeonData.DungeonMapDungeonGridEvent" FromRole="DungeonGridEvent" ToRole="DungeonMap" />
+          <Property Type="Int64" Name="DungeonMapGridId" Nullable="false" />
+          <NavigationProperty Name="Events" Relationship="DungeonData.DungeonGridEventEvent" FromRole="DungeonGridEvent" ToRole="Event" />
+        </EntityType>
+        <Association Name="DungeonMapDungeonGridEvent">
+          <End Type="DungeonData.DungeonMap" Role="DungeonMap" Multiplicity="1" />
+          <End Type="DungeonData.DungeonGridEvent" Role="DungeonGridEvent" Multiplicity="0..1" />
+        </Association>
+        <Association Name="DungeonGridEventEvent">
+          <End Type="DungeonData.DungeonGridEvent" Role="DungeonGridEvent" Multiplicity="1" />
+          <End Type="DungeonData.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DungeonGridEvent">
+              <PropertyRef Name="DungeonGridEventId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="DungeonGridEventDungeonGridEventId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Monster">
+          <Key>
+            <PropertyRef Name="MonsterId" />
+          </Key>
+          <Property Type="Int32" Name="MonsterId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="MonsterName" Nullable="false" />
+          <Property Type="Int32" Name="Attack" Nullable="false" />
+          <Property Type="Int32" Name="Defense" Nullable="false" />
+          <Property Type="Int32" Name="Alignment" Nullable="false" />
+          <NavigationProperty Name="MonsterEvent" Relationship="DungeonData.MonsterEventMonster" FromRole="Monster" ToRole="MonsterEvent" />
+          <Property Type="Int32" Name="MonsterEventEventId" Nullable="false" />
+        </EntityType>
+        <Association Name="MonsterEventMonster">
+          <End Type="DungeonData.MonsterEvent" Role="MonsterEvent" Multiplicity="1" />
+          <End Type="DungeonData.Monster" Role="Monster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MonsterEvent">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="Monster">
+              <PropertyRef Name="MonsterEventEventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Treasure">
+          <Key>
+            <PropertyRef Name="TreasureId" />
+          </Key>
+          <Property Type="Int32" Name="TreasureId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="TreasureName" Nullable="false" />
+          <NavigationProperty Name="TreasureEvent" Relationship="DungeonData.TreasureEventTreasure" FromRole="Treasure" ToRole="TreasureEvent" />
+          <Property Type="Int32" Name="TreasureEventEventId" Nullable="false" />
+        </EntityType>
+        <Association Name="TreasureEventTreasure">
+          <End Type="DungeonData.TreasureEvent" Role="TreasureEvent" Multiplicity="1" />
+          <End Type="DungeonData.Treasure" Role="Treasure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TreasureEvent">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="Treasure">
+              <PropertyRef Name="TreasureEventEventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DungeonDataStoreContainer" CdmEntityContainer="DungeonDataContainer">
+    <EntitySetMapping Name="Heroes">
+      <EntityTypeMapping TypeName="IsTypeOf(DungeonData.Hero)">
+        <MappingFragment StoreEntitySet="Heroes">
+          <ScalarProperty Name="HeroId" ColumnName="HeroId" />
+          <ScalarProperty Name="HeroName" ColumnName="HeroName" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HeroAttributes">
+      <EntityTypeMapping TypeName="IsTypeOf(DungeonData.HeroAttributes)">
+        <MappingFragment StoreEntitySet="HeroAttributes">
+          <ScalarProperty Name="HeroId" ColumnName="HeroId" />
+          <ScalarProperty Name="Life" ColumnName="Life" />
+          <ScalarProperty Name="Strength" ColumnName="Strength" />
+          <ScalarProperty Name="Agility" ColumnName="Agility" />
+          <ScalarProperty Name="Intelligence" ColumnName="Intelligence" />
+          <ScalarProperty Name="Wisdom" ColumnName="Wisdom" />
+          <ScalarProperty Name="Charm" ColumnName="Charm" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DungeonMaps">
+      <EntityTypeMapping TypeName="IsTypeOf(DungeonData.DungeonMap)">
+        <MappingFragment StoreEntitySet="DungeonMaps">
+          <ScalarProperty Name="GridId" ColumnName="GridId" />
+          <ScalarProperty Name="IsDark" ColumnName="IsDark" />
+          <ScalarProperty Name="IsTrapped" ColumnName="IsTrapped" />
+          <ScalarProperty Name="NorthGridId" ColumnName="NorthGridId" />
+          <ScalarProperty Name="SouthGridId" ColumnName="SouthGridId" />
+          <ScalarProperty Name="EastGridId" ColumnName="EastGridId" />
+          <ScalarProperty Name="WestGridId" ColumnName="WestGridId" />
+          <ScalarProperty Name="NorthFeature" ColumnName="NorthFeature" />
+          <ScalarProperty Name="SouthFeature" ColumnName="SouthFeature" />
+          <ScalarProperty Name="EastFeature" ColumnName="EastFeature" />
+          <ScalarProperty Name="WestFeature" ColumnName="WestFeature" />
+          <ScalarProperty Name="X" ColumnName="X" />
+          <ScalarProperty Name="Y" ColumnName="Y" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Events">
+      <EntityTypeMapping TypeName="IsTypeOf(DungeonData.Event)">
+        <MappingFragment StoreEntitySet="Events">
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+          <ScalarProperty Name="EventName" ColumnName="EventName" />
+          <ScalarProperty Name="DungeonGridEventDungeonGridEventId" ColumnName="DungeonGridEventDungeonGridEventId" />
+          <ScalarProperty Name="DungeonGridEventDungeonGridEventId1" ColumnName="DungeonGridEventDungeonGridEventId1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(DungeonData.MonsterEvent)">
+        <MappingFragment StoreEntitySet="Events_MonsterEvent">
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(DungeonData.TreasureEvent)">
+        <MappingFragment StoreEntitySet="Events_TreasureEvent">
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DungeonGridEvents">
+      <EntityTypeMapping TypeName="IsTypeOf(DungeonData.DungeonGridEvent)">
+        <MappingFragment StoreEntitySet="DungeonGridEvents">
+          <ScalarProperty Name="DungeonGridEventId" ColumnName="DungeonGridEventId" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="DungeonMapGridId" ColumnName="DungeonMapGridId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Monsters">
+      <EntityTypeMapping TypeName="IsTypeOf(DungeonData.Monster)">
+        <MappingFragment StoreEntitySet="Monsters">
+          <ScalarProperty Name="MonsterId" ColumnName="MonsterId" />
+          <ScalarProperty Name="MonsterName" ColumnName="MonsterName" />
+          <ScalarProperty Name="Attack" ColumnName="Attack" />
+          <ScalarProperty Name="Defense" ColumnName="Defense" />
+          <ScalarProperty Name="Alignment" ColumnName="Alignment" />
+          <ScalarProperty Name="MonsterEventEventId" ColumnName="MonsterEventEventId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Treasures">
+      <EntityTypeMapping TypeName="IsTypeOf(DungeonData.Treasure)">
+        <MappingFragment StoreEntitySet="Treasures">
+          <ScalarProperty Name="TreasureId" ColumnName="TreasureId" />
+          <ScalarProperty Name="TreasureName" ColumnName="TreasureName" />
+          <ScalarProperty Name="TreasureEventEventId" ColumnName="TreasureEventEventId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="HeroHeroAttributes" TypeName="DungeonData.HeroHeroAttributes" StoreEntitySet="Heroes">
+      <EndProperty Name="HeroAttributes">
+        <ScalarProperty Name="HeroId" ColumnName="HeroAttribute_HeroId" />
+      </EndProperty>
+      <EndProperty Name="Hero">
+        <ScalarProperty Name="HeroId" ColumnName="HeroId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="DungeonMapDungeonGridEvent" TypeName="DungeonData.DungeonMapDungeonGridEvent" StoreEntitySet="DungeonGridEvents">
+      <EndProperty Name="DungeonMap">
+        <ScalarProperty Name="GridId" ColumnName="DungeonMap_GridId" />
+      </EndProperty>
+      <EndProperty Name="DungeonGridEvent">
+        <ScalarProperty Name="DungeonGridEventId" ColumnName="DungeonGridEventId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="DungeonData" >
+        <EntityTypeShape EntityType="DungeonData.Hero" Width="2.125" PointX="0.5" PointY="0.75" Height="1.9802864583333339" IsExpanded="true" />
+        <EntityTypeShape EntityType="DungeonData.HeroAttributes" Width="1.5" PointX="3.875" PointY="0.75" Height="2.5571907552083331" IsExpanded="true" />
+        <AssociationConnector Association="DungeonData.HeroHeroAttributes">
+          <ConnectorPoint PointX="2.625" PointY="1.7401432291666672" />
+          <ConnectorPoint PointX="3.875" PointY="1.7401432291666672" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="DungeonData.DungeonMap" Width="2.25" PointX="0.75" PointY="3.5" Height="3.2357796223958317" IsExpanded="true" />
+        <EntityTypeShape EntityType="DungeonData.Event" Width="1.5" PointX="8.125" PointY="3.75" Height="1.7566536458333335" />
+        <EntityTypeShape EntityType="DungeonData.MonsterEvent" Width="1.5" PointX="9.25" PointY="6.875" Height="0.93491699218749957" />
+        <InheritanceConnector EntityType="DungeonData.MonsterEvent" >
+          <ConnectorPoint PointX="8.875" PointY="5.5066536458333335" />
+          <ConnectorPoint PointX="8.875" PointY="6.5" />
+          <ConnectorPoint PointX="10" PointY="6.5" />
+          <ConnectorPoint PointX="10" PointY="6.875" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="DungeonData.TreasureEvent" Width="1.5" PointX="6.125" PointY="6.875" Height="0.93491699218749957" />
+        <InheritanceConnector EntityType="DungeonData.TreasureEvent" >
+          <ConnectorPoint PointX="8.875" PointY="5.5066536458333335" />
+          <ConnectorPoint PointX="8.875" PointY="6.5" />
+          <ConnectorPoint PointX="6.875" PointY="6.5" />
+          <ConnectorPoint PointX="6.875" PointY="6.875" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="DungeonData.DungeonGridEvent" Width="2.125" PointX="3.875" PointY="3.875" Height="1.5923063151041665" />
+        <AssociationConnector Association="DungeonData.DungeonMapDungeonGridEvent">
+          <ConnectorPoint PointX="3" PointY="4.7533268229166659" />
+          <ConnectorPoint PointX="3.875" PointY="4.7533268229166659" />
+        </AssociationConnector>
+        <AssociationConnector Association="DungeonData.DungeonGridEventEvent" ManuallyRouted="false">
+          <ConnectorPoint PointX="6" PointY="4.6908268229166667" />
+          <ConnectorPoint PointX="8.125" PointY="4.6908268229166667" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="DungeonData.Monster" Width="1.5" PointX="9.25" PointY="8.75" Height="1.7566536458333326" />
+        <AssociationConnector Association="DungeonData.MonsterEventMonster">
+          <ConnectorPoint PointX="10" PointY="7.9742643229166665" />
+          <ConnectorPoint PointX="10" PointY="8.75" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="DungeonData.Treasure" Width="1.5" PointX="6.25" PointY="9" Height="1.2636116536458335" />
+        <AssociationConnector Association="DungeonData.TreasureEventTreasure">
+          <ConnectorPoint PointX="6.9375" PointY="7.9742643229166665" />
+          <ConnectorPoint PointX="6.9375" PointY="9" />
+        </AssociationConnector>
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
